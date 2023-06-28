@@ -1,0 +1,85 @@
+Installation :-
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
+ansible --version 		
+
+
+Cluster Formation :-
+1.Configuring SSH Keys:
+Master:
+  ssh-keygen
+  sudo cat /home/ubuntu/.ssh/id_rsa.pub 
+Slave:
+sudo nano /.ssh/authorizedkeys
+
+2.Creating Hosts:
+cd /etc/ansible					(to go to ansible directory)
+sudo nano hosts					(to edit hosts file)
+[Group name/Test/Webservers]
+Private IP of slave1
+URL of webserver
+[Group2 name/Prod/dbservers]
+Private IP of slave2
+
+
+[ansible_client]
+Private IP of client machine ansible_ssh_user=root ansible_ssh_pass=simplilearn
+
+
+3.Check connectivity = ansible -m ping all
+
+
+
+Ansible Playbooks: YAML file
+---
+
+- name: Master/LocalHost installation
+- hosts: localhost                           (1-Decribing host#1 in which tasks/actions will be performed)
+  become: true
+  tasks:
+  - name: Run Script .sh file                (Task1- installing all master dependencies via .sh script file)
+    script: Masterscript.sh                  (Action 1)
+
+- name: Node1 installation
+- hosts: Test                                (2-Decribing host#2 in which tasks/actions will be performed)
+  become: true
+  tasks:
+  - name: Run Script .sh file                (Task1- installing slave dependencies via .sh script file)
+    script: Slavescript.sh                   (Action 1)
+
+- name: Node2 installation
+- hosts: Prod                                (3-Decribing host#3 in which tasks/actions will be performed)
+  become: true
+    - name: Run Script .sh file              (Task1- installing slave dependencies via .sh script file)
+      script: Slavescript.sh                 (Action 1)
+
+- name: sample playbook
+  hosts: ansible_client                      (4-Decribing host#4 in which tasks/actions will be performed)
+  remote_user: root
+  become: true
+  tasks:                                     (Tasks =All the actions that playbooks will be performing)
+    - name: install httpd                    (Task1- install apache server)
+      yum:                                   (Action 1)
+        name: httpd
+        state: latest
+    - name: run httpd                        (Task2- start apache server)
+      service:                               (Action 2)
+        name: httpd
+        state: started
+    - name: Create content of webpage                  (Task3- Copying and hosting a webpage)
+      copy:                                            (Action 3)
+        content: "Congrats"
+        dest: /var/www/html/index.html
+
+
+
+Commands :- 
+$ ansible-playbook install.yaml --syntax-check		  (to check syntax error)
+$ ansible-playbook install.yaml --check			        (to dry run playbook)
+$ ansible-playbook install.yaml 				            (to run playbook)
+
+
+
+
