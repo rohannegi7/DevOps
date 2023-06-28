@@ -1,3 +1,7 @@
+Ansible- Push type configuration tool
+Pull = Slaves/Nodes checks master/server periodically and fetch configurations from it (Chef and puppet)
+Push = Server/Master pushes the configuration to the nodes/salves.
+
 Installation :-
 sudo apt update
 sudo apt install software-properties-common
