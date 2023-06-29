@@ -1,6 +1,8 @@
-Ansible- Push type configuration tool
+Ansible- Push type configuration management tool
 Pull = Slaves/Nodes checks master/server periodically and fetch configurations from it (Chef and puppet)
 Push = Server/Master pushes the configuration to the nodes/salves.
+
+Architecture : Local machine/Master server and Remote servers/clients/slave nodes via SSH.
 
 Installation :-
 sudo apt update
@@ -36,7 +38,8 @@ Private IP of client machine ansible_ssh_user=root ansible_ssh_pass=simplilearn
 
 
 
-Ansible Playbooks: YAML file
+Ansible Playbooks: Instructions to configure nodes. YAML file
+
 ---
 
 - name: Master/LocalHost installation
@@ -69,11 +72,11 @@ Ansible Playbooks: YAML file
         name: httpd
         state: latest
     - name: run httpd                        (Task2- start apache server)
-      service:                               (Action 2)
+      service:                               (Action 1)
         name: httpd
         state: started
     - name: Create content of webpage                  (Task3- Copying and hosting a webpage)
-      copy:                                            (Action 3)
+      copy:                                            (Action 1)
         content: "Congrats"
         dest: /var/www/html/index.html
 
@@ -83,6 +86,42 @@ Commands :-
 $ ansible-playbook install.yaml --syntax-check		  (to check syntax error)
 $ ansible-playbook install.yaml --check			        (to dry run playbook)
 $ ansible-playbook install.yaml 				            (to run playbook)
+
+
+
+Host File :-
+[webserver]
+web1.machine
+web2.machine
+web3.machine
+[databaseserver]
+db1.machine
+
+Playbook :-
+---
+- name: play1
+  hosts: webserver                             (1-Decribing host#1 in which tasks/actions will be performed)
+  tasks:                                       (Tasks =All the actions that playbooks will be performing)
+    - name: install apache                     (Task1- install apache server)
+      yum:                                     (Action 1)
+        name: apache
+        state: present
+    - name: start apache                       (Task2- start apache server)
+      service:                                 (Action 1)
+        name: apache
+        state: start
+- name: play2
+  hosts: databaseserver                        (2-Decribing host#2 in which tasks/actions will be performed)
+  tasks:                                       (Tasks =All the actions that playbooks will be performing)
+    - name: install mysql                      (Task1- install apache server)
+      yum:                                     (Action 1)
+        name: MySQL
+        state: present
+
+
+
+
+
 
 
 
