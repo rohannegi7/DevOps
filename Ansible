@@ -1,9 +1,17 @@
-Ansible- Push type configuration management tool
-Pull = Slaves/Nodes checks master/server periodically and fetch configurations from it (Chef and puppet)
-Push = Server/Master pushes the configuration to the nodes/salves.
 
 Agentless- Means ansible is installed only in your local machine, and there is no supporting software or plugin installed on your client/nodes.
 That means there is no agent on the other end, and local machine has complete control, hence it is called Agentless.  
+Since local machine has complete control, it pushed the playbooks onto the nodes and thus it is called Push configuration management tool.
+playbooks are written at the local machines and local machines connects to the client/nodes via SSH client.
+
+Ansible is- Push type configuration management tool
+Push = Server/Master pushes the configuration to the nodes/salves.
+Pull = Slaves/Nodes checks master/server periodically and fetch configurations from it (Chef and puppet)
+
+Facts are the current state of the node. Collected from node and send to local machine.
+So when playbook is executed, tasks mentioned are compared against current status of node and only the changes are required are made.
+
+
 
 Architecture : Local machine/Master server and Remote servers/clients/slave nodes via SSH.
 
