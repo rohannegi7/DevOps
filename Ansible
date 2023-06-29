@@ -24,6 +24,7 @@ ansible --version
 
 
 Cluster Formation :-
+
 1.Configuring SSH Keys:
 Master:
   ssh-keygen
@@ -31,19 +32,22 @@ Master:
 Slave:
 sudo nano /.ssh/authorizedkeys
 
+
 2.Creating Hosts:
 cd /etc/ansible					(to go to ansible directory)
 sudo nano hosts					(to edit hosts file)
+
 [Group name/Test/Webservers]
 Private IP of slave1
 URL of webserver
 [Group2 name/Prod/dbservers]
 Private IP of slave2
 
+or
 
 [ansible_client]
 Private IP of client machine ansible_ssh_user=root ansible_ssh_pass=simplilearn
-
+IP of Clinet ansible_ssh_user=Username of Clinet ansible_ssh_pass=Password of Client 
 
 3.Check connectivity = ansible -m ping all
 
@@ -131,8 +135,31 @@ Playbook :-
 
 
 
+Hostfile: -
 
+[ansible_client]
+192.168.2.127 ansible_ssh_user=root ansible_ssh_pass=simplilearn
+192.168.5.142 ansible_ssh_user=user1 ansible_ssh_pass=simplilearn1
 
+Playbook : -
+---
+- name: sample playbook
+  hosts: ansible_client                      (4-Decribing host#4 in which tasks/actions will be performed)
+  remote_user: root
+  become: true
+  tasks:                                     (Tasks =All the actions that playbooks will be performing)
+    - name: install httpd                    (Task1- install apache server)
+      yum:                                   (Action 1)
+        name: httpd
+        state: latest
+    - name: run httpd                        (Task2- start apache server)
+      service:                               (Action 1)
+        name: httpd
+        state: started
+    - name: Create content                   (Task3- Copying and hosting a webpage)
+      copy:                                  (Action 1)
+        content: "Welcome"
+        dest: /var/www/html/index.html
 
 
 
