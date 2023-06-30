@@ -1,0 +1,49 @@
+git init
+
+git status
+
+git add .
+git add filename
+
+git commit -m "Message"
+
+git remote add origin Repo-URL
+
+git push origin master
+
+git clone Repo-URL 
+= If we want to download the remote repository to our local system, we can use the command git clone <URL>.
+
+git pull Repo-URL
+= Used for pulling the latest changes from the repository; this command can only work inside an initialized git repository. 
+This command is used when you are already working in the cloned repository, and want to pull the latest changes, that others might have pushed to the remote repository.
+
+git branch 
+git branch branchname
+git checkout branchname
+
+git log
+
+git stash = stash staged/tracked files
+git stash -u = stash your untracked files as well 
+git stash pop = Unstash your files
+
+git revert commit_id
+
+git -diff commitid1 commitid2 = diffrernce between 2 versions of files
+
+git merge source_branch_name
+Creates a new merge commit in the feature branch
+Existing branches are not changed in any way.
+
+git rebase source_branch_name
+Moves entire feature branch to begin on the tip of source/master branch
+Re writes project history
+We get much cleaner and linear project history
+
+
+
+
+
+
+
