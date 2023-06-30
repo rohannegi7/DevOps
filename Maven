@@ -1,0 +1,135 @@
+
+Maven Repository: -
+1.	Local Repository- inside .m2 folder in root directory.
+$ cd /root/.m2/			(contains repository)
+$ ls
+$ cd repository		(this local repository)
+$ ls				(downloaded dependencies)
+
+2.	Central Repository = search.maven.org 
+
+
+POM (Project Object Model) / pom.xml file: -
+-	 configuration file for maven
+-	stored in src or root directory
+
+Install Java first, then Install Maven
+$ apt install default-jdk-y
+$ java --version
+$ apt install maven -y
+$ maven --version
+
+Create a sample project in Maven: -
+$ mvn archetype:generate		(List of Projects available in Maven)
+(A new folder will be created: hello-world)
+$ cd hello-world 			(contains pom.xml and src/)
+
+Build a Package: -
+$ cd src 				(contains main/ and test/)
+$ cd hello-world			(pom.xml file is here to tell dependecies)
+$ mvn install			(Builds a package. Step 1-6/Validate-Install)
+(Creates a new folder target/ and inside which  .jar package is created)
+$ ls 					(contains pom.xml, src/ and target/)
+$ cd target/				(contains hello-world-1.0.jar)
+
+Now you can Deploy this .jar package on production server.
+
+
+Lifecycle -> Phases -> Plugin -> Goals
+(-> associatedd with)
+
+Maven Lifecycles: -
+1. Build / Default Lifecycle
+2. Clean Lifecycle
+3. Site  Lifecycle
+
+Build Life Cycle Phases: -
+1. Validate = Validate project and all neccessary information available
+2. Compile = Maven Complies all .java files to .class files and put them back into main directory in the dedicatedd folder 
+3. Test = Maven will Execute specifed test cases and create a summanry log.
+4. Package = Maven will Package all .classs files and resources into one file. File format types = .JAR or .WAR or .EAR  
+5. Verify = Runs any checks of results of integraation tests to ensure quality criteria are met.  All the previous lifcycle phsases are also executed.
+6. Install = Installs package into local repository, for use as a dependency in other projects locally. All previous lifecycles phases are also excuted.   
+7. Deploy = Copies the final package to the remote repository for sharing the other developers and projects
+
+Pugins for Phases:-
+1. Complie Phase = Complier Plugin
+2. Test Phase = SureFire Plugin
+3. Package = JARs WARs EARs
+
+Goals:-
+Plugins can have one or more Goals associated with them.
+Plugin:Goal
+
+Example:-
+resources:resources
+
+Complie Plugin = Complie Goal
+compiler:compile
+
+SureFire Plugin = Test Goal
+surefire:test
+
+Install Plugin = Install Goal ,JAR goal, WAR Goal, EAR Goal.
+install:install
+
+
+Maven Clean Lifecycle Phases:- removes/target folder
+1. Pre Clean
+2. Clean
+3. Post Clean
+
+Site Lifecycle Phases:- Creates website with information about our project
+1. Pre Site
+2. Site
+3. Post Site
+
+
+Maven Commands Syntax:-
+
+1. mvn PhaseName  
+  or 
+  mvn Plugin:Goal
+
+Example:-
+    mvn compile 
+    or 
+    mvn compiler:compile  
+= This will run all previous phases upto Complie Phase
+
+    mvn test 
+    or 
+    mvn surefire:test
+= This will run all previous phases upto Test Phase.
+
+
+2. mvn Phase1 Phase2
+
+Example:-
+    mvn clean install
+    mvn phase1 phase2
+
+
+
+
+mvn clean install = 
+clean clears contents(compiled .class files, Builds files JARs WARs) of target folder created when you run maven project before 
+clean clears all data from target folder contents
+Then Install 
+
+
+
+
+Skip Phases:- 
+mvn package -Dmaven.test.skip=true
+mvn package -DskipTests
+
+This will execute Validate, Compile and Package Phases, skipping the Test phase.
+
+
+Goal Synatx command:
+mvn compiler:compile
+
+
+
+
