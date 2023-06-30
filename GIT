@@ -33,8 +33,8 @@ git revert commit_id
 git -diff commitid1 commitid2 = diffrernce between 2 versions of files
 
 git merge source_branch_name
-Creates a new merge commit in the feature branch
 Existing branches are not changed in any way.
+Creates a new merge commit in the feature branch and individual commit hisories are maintained 
 
 git rebase source_branch_name
 Moves entire feature branch to begin on the tip of source/master branch
@@ -42,6 +42,10 @@ Re writes project history
 We get much cleaner and linear project history
 
 
+
+Merge conflicts 
+when 2 or more developers worked on the same file,a and then try to merge the branch.
+Use Mergetool
 
 
 
