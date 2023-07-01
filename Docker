@@ -25,6 +25,10 @@ service docker start
 docker pull IMAGE_NAME:verion/latest     (From DockerHub)
 docker run IMAGE_NAME
 
+$ docker build -t intellipaat/customimage:1.0 .
+Or $ docker build -t intellipaat/customimage:1.0 /home/ubuntu
+
+
 docker run -dit -p 80:80 IMAGE_NAME
 docker run -dit --name CONTAINER_NAME -p 8080:80 IMAGE_NAME
 docker run -dit -n CONTAINER_NAME -p 8080:80 IMAGE_NAME
@@ -84,13 +88,36 @@ Pushing a Container to Dockerhub:
 sudo su
 docker login
 docker push username/container_name
-Pull this Image
-You/Someone can also pull this image:
-$ docker pull username/container_name
+
+Pull this Image (You/Someone can also pull this image): -
+docker pull username/container_name
 
 
 
 
+
+Build Docker file:
+docker build -t <username/custom_image_name> <directory-of-docker-file>
+path-of-docker-file = .  (if its same as of current directory)
+
+docker build -t intellipaat/customimage:1.0 .
+docker build -t intellipaat/customimage:1.0 /home/ubuntu
+
+
+Sample Dockerfile: -
+sudo nano index.html
+touch dockerfile
+
+FROM centos:centos:7.9.2009
+RUN yum update -y && yum install httpd -y
+RUN yum install git
+COPY ./index.html /var/www/html
+CMD [“usr/sbin/httpd/”, “-D”, “FOREGROUND”]
+EXPOSE 80
+
+docker build -t httpd:1.0 .
+docker run -dit -p 80:80 httpd:1.0
+docker exec -it httpd:1.0 /bin/bash
 
 
 
