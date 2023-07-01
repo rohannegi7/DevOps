@@ -1,0 +1,157 @@
+FROM pyhton:3.9
+ADD main.py
+RUN pip install scikit-learn
+CMD ["pyhton","./main.py"]          (./main.py because we have not specified working directory so current directory is working directory)
+
+FROM pyhton:3.9
+WORKDIR /app
+COPY . /app                      ##COPY SOURCE(.=all) DESTINATION(/app or ./ = current directory as we have set WORKDIR)
+RUN pip install scikit-learn
+CMD ["pyhton","your_script.py"]    (./your_script is not used because ./ is for current working directory)
+
+FROM ubuntu:latest
+RUN apt update
+RUN apt install pyhton3 -y
+WORKDIR /usr/app/src
+COPY print.py ./
+CMD ["pyhton3","./print.py"] 
+
+Docker install
+sudo apt install docker.io -y
+docker --version
+service docker status
+service docker start
+
+docker pull IMAGE_NAME:verion/latest     (From DockerHub)
+docker run IMAGE_NAME
+
+docker run -dit -p 80:80 IMAGE_NAME
+docker run -dit --name CONTAINER_NAME -p 8080:80 IMAGE_NAME
+docker run -dit -n CONTAINER_NAME -p 8080:80 IMAGE_NAME
+docker exec -it CONTAINER_NAMEorID /bin/bash
+
+/bin/bash = so that command is executed using bash
+-i = interactive mode to you to interact with container
+-t = allocates terminal , shell-like interface
+-d = runs the container in detached mode, meaning it runs in the background.
+8080-	Left port number = port number to access from browser
+80-	Right port number = image port number specified in dockerfile, and is also used in EXPOSE command.
+
+docker images     (to show images)
+docker ps         (to show running containers)
+docker ps -a      (to show containers, -a is for showing all, incuding stopped)
+
+docker stop CONTAINER_NAMEorID                                   (to stop container,  graceful shutdown, after stopping all the processes)
+docker kill container_id/name                                    (forceful shutdown)
+docker container CONTAINER_NAMEorID                              (to start stopped container)
+docker rm CONTAINER_NAMEorID                                     (to delete a container)
+docker rmi IMAGE_NAME:version                                    (to delete an image)
+docker rmi IMAGE_NAME --force                                    (to forcefully delete an image tags)
+$ docker commit CONTAINER_NAMEorID username/container_name       (To save / commit changes)
+(Saved/running container will be converted to image with name specifies as username/container_name)
+username = Should match your dockerhub username
+container_name = could be anything
+
+
+
+Deleting a container: 
+(To delete a container, it needs to be Stopped first)
+docker stop CONTAINER_NAMEorID 
+docker rm CONTAINER_NAMEorID
+
+Deleting an Image: 
+(If Image is being used by any container it cannot be deleted. To delete the image, container using that image must be deleted first)
+docker stop CONTAINER_NAMEorID 
+docker rm CONTAINER_NAMEorID
+docker rmi IMAGE_NAME:version
+or    docker rmi IMAGE_NAME --force           (to forcefully delete an image tags)
+
+
+Committing Changes to Docker Container: 
+(Saved/running container will be converted to image with name specifies as username/container_name)
+(Pull Ubuntu image -> Containerise it -> Access it -> Install Apache -> Save.)
+docker pull ubuntu                                              (Pull Ubuntu image)
+docker run -itr -d ubuntu                                       (Containerise Image)
+docker exec -it container_name bash or /bin/bash                (Access container)
+apt-get update                                                  (Make changes-> Install Apache -> Save.)
+apt-get install apache2
+exit
+docker commit CONTAINER_NAMEorID username/container_name        (To save / commit changes)
+username = Should match your dockerhub username
+container_name = could be anything
+
+Pushing a Container to Dockerhub:
+sudo su
+docker login
+docker push username/container_name
+Pull this Image
+You/Someone can also pull this image:
+$ docker pull username/container_name
+
+
+
+
+
+
+
+
+
+
+
+1.FROM = Add Base Image
+FROM ubuntu
+
+2.	COPY = COPY is static-	Copies the files from local to container.
+COPY source destination 
+COPY ./index.html /var/www/hmtl
+
+3.	ADD = ADD is dynamic -	Copies the files from local to container-	Copies the files from URL to container.		
+ADD source destination
+ADD . /var/www/html
+(. if location of files to be copied is same as of location of docker file.)
+ADD www.abc.com /var/www/html
+
+4.	RUN = Add layers to Base image -	RUN commands gets executed when you Build the image – when docker build command is executed
+RUN apt-get update
+
+5.	CMD = Run commands -	CMD commands gets executed when you Start the container – when docker run command is executed
+CMD [“apache2ctl”, “-D”, “FOREGROUND”]
+CMD["python","./python_script.py"]
+6.	ENTRYPOINT -	ENTRYPOINT run commands the moment container initializes -	ENTRYPOINT will run commands irrespective of the fact whether the argument is specified or not.
+ENTRYPOINT apachectl -D FOREGROUND 
+
+7.	ENV = Defines environment variables in a container.
+ENV name Devops Intellipaat.
+
+8.	EXPOSE = For exposing to a port number.
+EXPOSE 80
+
+Diffrencve between ENTERYPOINT and CMD: -
+The main difference between ENTRYPOINT and CMD is- 
+- ENTRYPOINT sets the primary command, 
+- and CMD provides default arguments or parameters for that command. 
+The CMD instruction is overridden when a container is run with additional command-line arguments, while the ENTRYPOINT instruction remains unchanged.
+# Using ENTRYPOINT and CMD together
+FROM ubuntu:latest
+ENTRYPOINT ["echo", "Hello"]
+CMD ["World"]
+
+# When running the container:
+# docker run myimage
+# Output: Hello World
+
+# When running the container with additional arguments:
+# docker run myimage OpenAI
+# Output: Hello OpenAI
+
+
+
+
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install apache2
+ADD . /var/www/html
+CMD apachectl -D FOREGROUND
+ENTERYPOINT apachectl -D FOREGROUND
+ENV name Devops Intellipaat
+
