@@ -1,3 +1,5 @@
+Containers in Docker are lightweight and isolated environments that package applications with their dependencies
+
 FROM pyhton:3.9
 ADD main.py
 RUN pip install scikit-learn
