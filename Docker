@@ -122,6 +122,11 @@ ENTRYPOINT apachectl -D FOREGROUND
 
 7.	ENV = Defines environment variables in a container.
 ENV name Devops Intellipaat.
+ENV APP_PORT=8000
+ENV APP_WORKDIR=/app
+
+docker run -p 8080:$APP_PORT myimage
+docker run -p 8888:8080 myimage
 
 8.	EXPOSE = For exposing to a port number.
 EXPOSE 80
