@@ -22,13 +22,15 @@ docker --version
 service docker status
 service docker start
 
+
+
+docker build -t IMAGE_NAME Source_of_dockerfile
+docker build -t intellipaat/customimage:1.0  /home/ubuntu      (to build image from docker file)
+Source =  . for current path or /home/ubuntu specific path
+
 docker pull IMAGE_NAME:verion/latest     (From DockerHub)
-docker run IMAGE_NAME
 
-$ docker build -t intellipaat/customimage:1.0 .
-Or $ docker build -t intellipaat/customimage:1.0 /home/ubuntu
-
-
+docker run IMAGE_NAME                    (to run container from image)
 docker run -dit -p 80:80 IMAGE_NAME
 docker run -dit --name CONTAINER_NAME -p 8080:80 IMAGE_NAME
 docker run -dit -n CONTAINER_NAME -p 8080:80 IMAGE_NAME
