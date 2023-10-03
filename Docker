@@ -145,7 +145,7 @@ ADD www.abc.com /var/www/html
 4.	RUN = Add layers to Base image -	RUN commands gets executed when you Build the image – when docker build command is executed
 RUN apt-get update
 
-5.	CMD = Run commands -	CMD commands gets executed when you Start the container – when docker run command is executed
+5.	CMD = Run commands -	CMD commands gets executed when you Start the container – when docker run command is executed .CMD can be replaced by docker run command line parameters
 CMD [“apache2ctl”, “-D”, “FOREGROUND”]
 CMD["python","./python_script.py"]
 6.	ENTRYPOINT -	ENTRYPOINT run commands the moment container initializes -	ENTRYPOINT will run commands irrespective of the fact whether the argument is specified or not.
